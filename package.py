@@ -6,7 +6,9 @@ class Package:
     address = ""
     deadline = "" 
     city = ""
-    zipCode = ""
+    zip_code = ""
     weight = 0
-    deliveryStatus = ""
-    
+    delivery_status = ""
+
+    def __init__(self) -> None:
+        pass
