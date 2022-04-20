@@ -81,8 +81,8 @@ if __name__ == "__main__":
 
 
     packagesTable = HashTable()
-    csv_reader.load_package_data("DSA2/packageDeliveryWGUPS/WGUPS Package File.csv", packagesTable)
-    distance_data = csv_reader.load_distance_data("/home/sam/DSA2/packageDeliveryWGUPS/distances.csv")
-    addresses_data = csv_reader.load_addresses("/home/sam/DSA2/packageDeliveryWGUPS/addresses.csv")
+    csv_reader.load_package_data("DSA2/packageDeliveryWGUPS//data_files/WGUPS Package File.csv", packagesTable)
+    distance_data = csv_reader.load_distance_data("/home/sam/DSA2/packageDeliveryWGUPS/data_files/distances.csv")
+    addresses_data = csv_reader.load_addresses("/home/sam/DSA2/packageDeliveryWGUPS/data_files/addresses.csv")
     
     
