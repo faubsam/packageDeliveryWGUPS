@@ -13,25 +13,25 @@ class HashTable:
     # Insert function takes a node as the value to add to the hash table
     # The bucket to insert is retrieved from the modulo of the size of the hash table
     # The node gets added to the list in the selected bucket
-    def insert(self, node):
-        bucket = hash(node) % len(self.table)
+    def insert(self, package):
+        bucket = hash(package) % len(self.table)
         bucket_list = self.table[bucket]
-        bucket_list.append(node)
+        bucket_list.append(package)
 
     # Lookup parameter returns the value in the bucket list for the given key parameter
-    def lookup(self, key):
-        bucket = hash(key) % len(self.table)
+    def lookup(self, package):
+        bucket = hash(package) % len(self.table)
         bucket_list = self.table[bucket]
-        if key in bucket_list:
-            node_index = bucket_list.index(key)
+        if package in bucket_list:
+            node_index = bucket_list.index(package)
             return bucket_list[node_index]
         else:
             return None
 
 
     # Remove function takes a key as the parameter and removes it from the bucket list if it is there
-    def remove(self, key):
-        bucket = hash(key) % len(self.table)
+    def delete(self, package):
+        bucket = hash(package) % len(self.table)
         bucket_list = self.table[bucket]
-        if key in bucket_list:
-            bucket_list.remove(key)
+        if package in bucket_list:
+            bucket_list.remove(package)
