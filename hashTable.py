@@ -43,8 +43,11 @@ class HashTable:
     def delete(self, package):
         bucket = int(package.id) % len(self.table)
         bucket_list = self.table[bucket]
-        if package in bucket_list:
-            bucket_list.remove(package)
+        for package_list in bucket_list:
+            if package_list[0] == package.id:
+                bucket_list.remove(package_list)
+        else:
+            return None
 
     def print_map(self):
         for i in range(50):
