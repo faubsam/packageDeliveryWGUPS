@@ -8,31 +8,37 @@ class Package_Delivery():
     distance_data = None
     addresses_data = None
     packages_table = None
+    # total miles traveled during the day
     total_miles = 0
-    driver1 = "First Driver"
-    driver2 = "Second Driver"
-    truck1 = truck.Truck(driver1)
-    truck2 = truck.Truck(driver2)
-    truck3 = truck.Truck(driver1)
+    
+    # initialize truck1 with a driver
+    truck1 = truck.Truck(True)
+    # initiliaze truck2 with a driver
+    truck2 = truck.Truck(True)
+    # intialize truck3 without a driver
+    truck3 = truck.Truck(False)
     
     
 
     def __init__(self):
         self.csv_reader = csv_helper.CSV_helper()
         self.packages_table = hashTable.HashTable()
+        # fill out the hash table with the package data
         self.csv_reader.load_package_data("DSA2/packageDeliveryWGUPS//data_files/WGUPS Package File.csv", self.packages_table)
-        
+        # fill the distances list with all distances
         self.distance_data = self.csv_reader.load_distance_data("/home/sam/DSA2/packageDeliveryWGUPS/data_files/distances.csv")
+        # fill the address list with all addresses as strings
         self.addresses_data = self.csv_reader.load_addresses("/home/sam/DSA2/packageDeliveryWGUPS/data_files/addresses.csv")
     
           
-
+    # return the distance between 2 address
     def distance_between(self, addr1, addr2):
         return self.distance_data[self.addresses_data.index(addr1)][self.addresses_data.index(addr2)]
 
-    def min_distance(self, addr, packages):
+    def min_distance(self, addr, truck_packages):
         pass
-
+    
+    # load all packages from the hash table into one of the 3 trucks
     def load_truck_packages(self):
         self.truck1.add_package(self.packages_table.table[1][0][1])
         self.truck1.add_package(self.packages_table.table[4][0][1])
@@ -80,4 +86,5 @@ class Package_Delivery():
 
 
     def deliver_packages(self, truck):
-        pass
+        closest_address = None
+
