@@ -15,6 +15,7 @@ class Package_Delivery():
     truck2 = truck.Truck(driver2)
     truck3 = truck.Truck(driver1)
     
+    
 
     def __init__(self):
         self.csv_reader = csv_helper.CSV_helper()
@@ -33,11 +34,50 @@ class Package_Delivery():
         pass
 
     def load_truck_packages(self):
-        self.truck2.add_package(self.packages_table.table[3][0][1])
-        self.truck2.add_package(self.packages_table.table[26][0][1])
-        self.truck2.add_package(self.packages_table.table[36][0][1])
-        self.truck2.add_package(self.packages_table.table[38][0][1])
+        self.truck1.add_package(self.packages_table.table[1][0][1])
+        self.truck1.add_package(self.packages_table.table[4][0][1])
+        self.truck1.add_package(self.packages_table.table[7][0][1])    
+        self.truck1.add_package(self.packages_table.table[13][0][1])
+        self.truck1.add_package(self.packages_table.table[14][0][1])
+        self.truck1.add_package(self.packages_table.table[15][0][1])
+        self.truck1.add_package(self.packages_table.table[16][0][1])
+        self.truck1.add_package(self.packages_table.table[19][0][1])
+        self.truck1.add_package(self.packages_table.table[20][0][1])
+        self.truck1.add_package(self.packages_table.table[21][0][1])
+        self.truck1.add_package(self.packages_table.table[22][0][1])
+        self.truck1.add_package(self.packages_table.table[24][0][1])
+        self.truck1.add_package(self.packages_table.table[29][0][1])
+        self.truck1.add_package(self.packages_table.table[34][0][1])
+        self.truck1.add_package(self.packages_table.table[39][0][1])
+        self.truck1.add_package(self.packages_table.table[40][0][1])
+
         
+        self.truck2.add_package(self.packages_table.table[3][0][1])
+        self.truck2.add_package(self.packages_table.table[5][0][1])
+        self.truck2.add_package(self.packages_table.table[6][0][1])
+        self.truck2.add_package(self.packages_table.table[8][0][1])
+        self.truck2.add_package(self.packages_table.table[12][0][1])
+        self.truck2.add_package(self.packages_table.table[18][0][1])
+        self.truck2.add_package(self.packages_table.table[25][0][1])
+        self.truck2.add_package(self.packages_table.table[26][0][1])
+        self.truck2.add_package(self.packages_table.table[27][0][1])
+        self.truck3.add_package(self.packages_table.table[30][0][1])
+        self.truck2.add_package(self.packages_table.table[31][0][1])
+        self.truck2.add_package(self.packages_table.table[32][0][1])
+        self.truck2.add_package(self.packages_table.table[35][0][1])
+        self.truck2.add_package(self.packages_table.table[36][0][1])
+        self.truck2.add_package(self.packages_table.table[37][0][1])
+        self.truck2.add_package(self.packages_table.table[38][0][1])
+
+        self.truck3.add_package(self.packages_table.table[2][0][1])
+        self.truck3.add_package(self.packages_table.table[9][0][1])
+        self.truck3.add_package(self.packages_table.table[10][0][1])
+        self.truck3.add_package(self.packages_table.table[11][0][1])
+        self.truck3.add_package(self.packages_table.table[17][0][1])
+        self.truck3.add_package(self.packages_table.table[23][0][1])
+        self.truck3.add_package(self.packages_table.table[28][0][1])
+        self.truck3.add_package(self.packages_table.table[33][0][1])
+
 
     def deliver_packages(self, truck):
         pass

@@ -14,8 +14,11 @@ class Truck:
 
     
     def add_package(self, package):
-        self.truck_packages.append(package)
-        self.current_packages += 1
+        if self.current_packages >= self.max_packages:
+            print("Package limit reached for this truck. Cannot add package with id: " + package.id) 
+        else:
+            self.truck_packages.append(package)
+            self.current_packages += 1
 
     def move_truck(self, dest_addr):
         self.current_location = dest_addr
