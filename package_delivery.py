@@ -34,18 +34,45 @@ class Package_Delivery():
           
     # return the distance between 2 address
     def distance_between(self, addr1, addr2):
-        return self.distance_data[self.addresses_data.index(addr1)][self.addresses_data.index(addr2)]
+        addr1_index = None
+        addr2_index = None
+
+        # loop through all addresses in the list
+        for addr in self.addresses_data:
+            # When an address is found, assign the index of that address to the addr#_index variable
+            if addr is addr1:
+                addr1_index = self.addresses_data.index(addr)
+            if addr is addr2:
+                addr2_index = self.addresses_data.index(addr)
+            # if both addresses have been found, break out of the loop
+            if addr1_index is not None and addr2_index is not None:
+                break
+        # find the distance in the distances table by putting the larger index first to avoid getting empty data
+        if addr2_index > addr1_index:
+            return self.distance_data[addr2_index][addr1_index]
+        else:
+            return self.distance_data[addr1_index][addr2_index]
+        
 
     def min_distance(self, addr, truck):
         next_package = None
         distance_to_next = 0
 
+        # loop through all packages in the truck
         for package in truck.truck_packages:
+            # if the next package to deliver has not been initialized, set it to the package in the list
             if next_package is None:
                 next_package = package
+            # if the distance is 0, set it to the distance from the current address to the address of the next_package
             if distance_to_next == 0:
-                distance_to_next = package
-            
+                distance_to_next = self.distance_between(truck.current_location, package.address)
+            # calculate the distance for each package in the truck and save the smallest one in the distance_to_next variable
+            package_distance = self.distance_between(truck.current_location, package.address)
+            if package_distance < distance_to_next:
+                distance_to_next = package_distance
+                next_package = package
+        # return the package object that has the shortest distance to the next address
+        return next_package
     
     # load all packages from the hash table into one of the 3 trucks
     def load_truck_packages(self):
@@ -95,5 +122,6 @@ class Package_Delivery():
 
 
     def deliver_packages(self, truck):
-        closest_address = None
+        
+            
 

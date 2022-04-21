@@ -46,8 +46,9 @@ class HashTable:
         for package_list in bucket_list:
             if package_list[0] == package.id:
                 bucket_list.remove(package_list)
+                return "Package deleted"
         else:
-            return None
+            return "Package not found"
 
     def print_map(self):
         for i in range(50):

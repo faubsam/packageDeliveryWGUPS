@@ -1,3 +1,6 @@
+from DSA2.packageDeliveryWGUPS.package_delivery import Package_Delivery
+
+
 class Truck:
     max_packages = 16
     speed = 18
@@ -11,6 +14,10 @@ class Truck:
     has_driver = False
     # the miles traveled by the truck during the day
     miles_traveled = 0
+    # the time it takes to deliver the next package on the truck
+    time_to_deliver = 0
+    # the total time in minutes since the truck has left the hub facility
+    time_elapsed = 0
 
     def __init__(self,  has_driver, max_packages=max_packages, speed=speed):
         self.max_packages = max_packages
@@ -28,4 +35,21 @@ class Truck:
 
     # move to the truck to a new address and update the truck's location
     def move_truck(self, dest_addr):
+        # calculate the distance to the next delivery address
+        distance_to_next_stop = Package_Delivery.distance_between(self.current_location, dest_addr)
+        # update the miles traveled by this truck
+        self.miles_traveled += distance_to_next_stop
+        # calculate the time to deliver the next package
+        self.time_to_deliver = (distance_to_next_stop/self.speed)*60
+        # update the total time elapsed since the truck left the hub
+        self.time_elapsed += self.time_to_deliver
+        # update the truck's location to the next delivery address
         self.current_location = dest_addr
+
+    def deliver_package(self, package):
+        count = 0
+        for pack in self.truck_packages:
+            if pack.id == package.id:
+                self.truck_packages.remove(count)
+            count += 1
+        self.current_packages -= 1
