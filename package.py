@@ -23,7 +23,7 @@ class Package:
         self.weight = weight
         self.delivery_status = delivery_status
 
-    
+    # add all packages in the file to the hash table
     def loadPackageData(file, hashTable):
         with open(file) as package_file:
             packageData = csv.reader(package_file)
