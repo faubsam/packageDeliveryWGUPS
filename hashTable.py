@@ -30,18 +30,18 @@ class HashTable:
 
     # Lookup parameter returns the value in the bucket list for the given key parameter
     def lookup(self, package):
-        bucket = hash(package) % len(self.table)
+        bucket = int(package.id) % len(self.table)
         bucket_list = self.table[bucket]
-        if package in bucket_list:
-            node_index = bucket_list.index(package)
-            return bucket_list[node_index]
+        for package_list in bucket_list:
+            if package_list[0] == package.id:
+                return package_list
         else:
             return None
 
 
     # Remove function takes a key as the parameter and removes it from the bucket list if it is there
     def delete(self, package):
-        bucket = hash(package) % len(self.table)
+        bucket = int(package.id) % len(self.table)
         bucket_list = self.table[bucket]
         if package in bucket_list:
             bucket_list.remove(package)

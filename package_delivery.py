@@ -1,3 +1,4 @@
+from struct import pack
 import package
 import truck
 import hashTable
@@ -35,8 +36,16 @@ class Package_Delivery():
     def distance_between(self, addr1, addr2):
         return self.distance_data[self.addresses_data.index(addr1)][self.addresses_data.index(addr2)]
 
-    def min_distance(self, addr, truck_packages):
-        pass
+    def min_distance(self, addr, truck):
+        next_package = None
+        distance_to_next = 0
+
+        for package in truck.truck_packages:
+            if next_package is None:
+                next_package = package
+            if distance_to_next == 0:
+                distance_to_next = package
+            
     
     # load all packages from the hash table into one of the 3 trucks
     def load_truck_packages(self):
