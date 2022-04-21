@@ -29,7 +29,7 @@ class Package:
             packageData = csv.reader(package_file)
             next(packageData)
             for package in packageData:
-                p_id = int(package[0])
+                p_id = package[0]
                 p_address = package[1]
                 p_deadline = package[5]
                 p_city = package[2]

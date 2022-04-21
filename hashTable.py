@@ -1,3 +1,6 @@
+import hashlib
+
+
 class HashTable:
     # Constructor for the hash table class which creates a new, blank hash table
     # Default capacity is 50
@@ -11,7 +14,7 @@ class HashTable:
     # The bucket to insert is retrieved from the modulo of the size of the hash table
     # The node gets added to the list in the selected bucket
     def insert(self, id, package):
-        bucket = hash(id) % len(self.table)
+        bucket = int(id) % len(self.table)
         new_package = [id, package]
 
         if self.table[bucket] is None:
