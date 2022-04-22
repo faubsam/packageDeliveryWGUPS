@@ -32,7 +32,11 @@ class Package_Delivery():
         # fill the address list with all addresses as strings
         self.addresses_data = self.csv_reader.load_addresses("/home/sam/DSA2/packageDeliveryWGUPS/data_files/addresses.csv")
         
-    
+    def get_address_index(self, addr):
+        for i in range(len(self.addresses_data)):
+            if addr == self.addresses_data[i]:
+                return i
+        return 0
           
     # return the distance between 2 address
     def distance_between(self, addr1, addr2):
@@ -146,7 +150,10 @@ class Package_Delivery():
                 next_package.delivery_status = 'delivered'
                 #print("Package delivered: " + next_package.id)
                 #print('Distance so far for truck: ' + str(truck.miles_traveled))
-        #print(self.addresses_data)
-        #distance_to_hub = self.distance_data[truck.current_location][0]
-        #truck.move_truck(float(distance_to_hub), self.addresses_data[0])
+        
+        if truck.current_packages == 0:
+                        
+            distance_to_hub = float(self.distance_between(truck.current_location, self.addresses_data[0][1]))
+            truck.move_truck(distance_to_hub, self.addresses_data[0][1])
+            
 
