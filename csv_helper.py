@@ -14,7 +14,8 @@ class CSV_helper:
         addresses_data = []
         with open(file, newline='') as addresses_file:
             for row in csv.reader(addresses_file):
-                addresses_data.append(row[0])
+                addresses_data.append(row)
+                
         return addresses_data
 
     def load_package_data(self, file, hashTable):
