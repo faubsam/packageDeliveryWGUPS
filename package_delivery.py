@@ -31,6 +31,7 @@ class Package_Delivery():
         self.distance_data = self.csv_reader.load_distance_data("/home/sam/DSA2/packageDeliveryWGUPS/data_files/distances.csv")
         # fill the address list with all addresses as strings
         self.addresses_data = self.csv_reader.load_addresses("/home/sam/DSA2/packageDeliveryWGUPS/data_files/addresses.csv")
+        
     
           
     # return the distance between 2 address
@@ -54,14 +55,14 @@ class Package_Delivery():
 
         # find the distance in the distances table by putting the larger index first to avoid getting empty data
         if addr2_index > addr1_index:
-            return self.distance_data[addr2_index][addr1_index]
+            return float(self.distance_data[addr2_index][addr1_index])
         else:
-            return self.distance_data[addr1_index][addr2_index]
+            return float(self.distance_data[addr1_index][addr2_index])
         
 
     def min_distance(self, truck):
         next_package = None
-        self.distance_to_next = 0
+        self.distance_to_next = float(0)
 
         # loop through all packages in the truck
         for package in truck.truck_packages:
@@ -71,10 +72,10 @@ class Package_Delivery():
             # if the distance is 0, set it to the distance from the current address to the address of the next_package
             if self.distance_to_next == 0:
                
-                self.distance_to_next = self.distance_between(truck.current_location[1], package.address)
+                self.distance_to_next = self.distance_between(truck.current_location, package.address)
             # calculate the distance for each package in the truck and save the smallest one in the distance_to_next variable
             
-            package_distance = self.distance_between(truck.current_location[1], package.address)
+            package_distance = self.distance_between(truck.current_location, package.address)
             
             if package_distance < self.distance_to_next:
                 self.distance_to_next = package_distance
@@ -85,7 +86,7 @@ class Package_Delivery():
     
     # load all packages from the hash table into one of the 3 trucks
     def load_truck_packages(self):
-        self.truck1.current_location = self.addresses_data[0]
+        self.truck1.current_location = self.addresses_data[0][1]
         self.truck1.add_package(self.packages_table.table[1][0][1])
         self.truck1.add_package(self.packages_table.table[4][0][1])
         self.truck1.add_package(self.packages_table.table[7][0][1])    
@@ -103,7 +104,7 @@ class Package_Delivery():
         self.truck1.add_package(self.packages_table.table[39][0][1])
         self.truck1.add_package(self.packages_table.table[40][0][1])
 
-        self.truck2.current_location = self.addresses_data[0]
+        self.truck2.current_location = self.addresses_data[0][1]
         self.truck2.add_package(self.packages_table.table[3][0][1])
         self.truck2.add_package(self.packages_table.table[5][0][1])
         self.truck2.add_package(self.packages_table.table[6][0][1])
@@ -121,7 +122,7 @@ class Package_Delivery():
         self.truck2.add_package(self.packages_table.table[37][0][1])
         self.truck2.add_package(self.packages_table.table[38][0][1])
 
-        self.truck3.current_location = self.addresses_data[0]
+        self.truck3.current_location = self.addresses_data[0][1]
         self.truck3.add_package(self.packages_table.table[2][0][1])
         self.truck3.add_package(self.packages_table.table[9][0][1])
         self.truck3.add_package(self.packages_table.table[10][0][1])
@@ -133,10 +134,19 @@ class Package_Delivery():
 
 
     def deliver_packages(self, truck):
-        for i in range(truck.current_packages):
-            next_package = self.min_distance(truck)
-            truck.move_truck(float(self.distance_to_next), next_package.address)
-            truck.deliver_package(next_package)
-            print("Package delivered: " + next_package.id)
-            print('Distance so far for truck: ' + str(truck.miles_traveled))
+        if truck.has_driver is False:
+            print("Truck has no driver")
+        else: 
+            for i in range(truck.current_packages):
+                truck.truck_packages[i].delivery_status = 'en route'
+            for i in range(truck.current_packages):
+                next_package = self.min_distance(truck)
+                truck.move_truck(float(self.distance_to_next), next_package.address)
+                truck.deliver_package(next_package)
+                next_package.delivery_status = 'delivered'
+                #print("Package delivered: " + next_package.id)
+                #print('Distance so far for truck: ' + str(truck.miles_traveled))
+        #print(self.addresses_data)
+        #distance_to_hub = self.distance_data[truck.current_location][0]
+        #truck.move_truck(float(distance_to_hub), self.addresses_data[0])
 
