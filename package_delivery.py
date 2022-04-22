@@ -11,7 +11,7 @@ class Package_Delivery():
     packages_table = None
     # total miles traveled during the day
     total_miles = 0
-    
+    distance_to_next = float(0)
     # initialize truck1 with a driver
     truck1 = truck.Truck(True)
     # initiliaze truck2 with a driver
@@ -25,7 +25,7 @@ class Package_Delivery():
         self.csv_reader = csv_helper.CSV_helper()
         self.packages_table = hashTable.HashTable()
         # fill out the hash table with the package data
-        self.csv_reader.load_package_data("DSA2/packageDeliveryWGUPS//data_files/WGUPS Package File.csv", self.packages_table)
+        self.csv_reader.load_package_data("/home/sam/DSA2/packageDeliveryWGUPS/data_files/WGUPS Package File.csv", self.packages_table)
         # fill the distances list with all distances
         self.distance_data = self.csv_reader.load_distance_data("/home/sam/DSA2/packageDeliveryWGUPS/data_files/distances.csv")
         # fill the address list with all addresses as strings
@@ -38,19 +38,19 @@ class Package_Delivery():
         addr2_index = None
         count = 0
         # loop through all addresses in the list
+        
         for addr in self.addresses_data:
-            print(addr[1])
+            
             # When an address is found, assign the index of that address to the addr#_index variable
-            if addr[1] is addr1:
+            if addr[1] == addr1:
                 addr1_index = count
-            if addr[1] is addr2:
+            if addr[1] == addr2:
                 addr2_index = count
             # if both addresses have been found, break out of the loop
             if addr1_index is not None and addr2_index is not None:
                 break
             count += 1
-            print(addr1_index)
-            print(addr2_index)
+
         # find the distance in the distances table by putting the larger index first to avoid getting empty data
         if addr2_index > addr1_index:
             return self.distance_data[addr2_index][addr1_index]
@@ -60,7 +60,7 @@ class Package_Delivery():
 
     def min_distance(self, truck):
         next_package = None
-        distance_to_next = 0
+        self.distance_to_next = 0
 
         # loop through all packages in the truck
         for package in truck.truck_packages:
@@ -68,15 +68,18 @@ class Package_Delivery():
             if next_package is None:
                 next_package = package
             # if the distance is 0, set it to the distance from the current address to the address of the next_package
-            if distance_to_next == 0:
+            if self.distance_to_next == 0:
                
-                distance_to_next = self.distance_between(truck.current_location[1], package.address)
+                self.distance_to_next = self.distance_between(truck.current_location[1], package.address)
             # calculate the distance for each package in the truck and save the smallest one in the distance_to_next variable
+            print("current: " + truck.current_location[1] + " package addr: " + package.address)
             package_distance = self.distance_between(truck.current_location[1], package.address)
-            if package_distance < distance_to_next:
-                distance_to_next = package_distance
+            print('distance:' + package_distance)
+            if package_distance < self.distance_to_next:
+                self.distance_to_next = package_distance
                 next_package = package
         # return the package object that has the shortest distance to the next address
+        
         return next_package
     
     # load all packages from the hash table into one of the 3 trucks
@@ -130,7 +133,8 @@ class Package_Delivery():
 
     def deliver_packages(self, truck):
         next_package = self.min_distance(truck)
-        truck.move_truck(next_package.address)
+        truck.move_truck(float(self.distance_to_next), next_package.address)
         truck.deliver_package(next_package)
         print("Package delivered: " + next_package.id)
+        print(truck.miles_traveled)
 

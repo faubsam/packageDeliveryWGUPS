@@ -35,13 +35,13 @@ class Truck:
             self.current_packages += 1
 
     # move to the truck to a new address and update the truck's location
-    def move_truck(self, dest_addr):
+    def move_truck(self, distance, dest_addr):
         # calculate the distance to the next delivery address
-        distance_to_next_stop = package_delivery.Package_Delivery.distance_between(self.current_location, dest_addr)
+        distance_to_next_stop = distance
         # update the miles traveled by this truck
         self.miles_traveled += distance_to_next_stop
         # calculate the time to deliver the next package
-        self.time_to_deliver = (distance_to_next_stop/self.speed)*60
+        self.time_to_deliver = (distance/self.speed)*60
         # update the total time elapsed since the truck left the hub
         self.time_elapsed += self.time_to_deliver
         # update the truck's location to the next delivery address
@@ -51,6 +51,6 @@ class Truck:
         count = 0
         for pack in self.truck_packages:
             if pack.id == package.id:
-                self.truck_packages.remove(count)
+                self.truck_packages.remove(pack)
             count += 1
         self.current_packages -= 1
