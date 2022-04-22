@@ -1,4 +1,5 @@
 from struct import pack
+
 import package
 import truck
 import hashTable
@@ -11,7 +12,7 @@ class Package_Delivery():
     packages_table = None
     # total miles traveled during the day
     total_miles = 0
-    distance_to_next = float(0)
+    distance_to_next = 0
     # initialize truck1 with a driver
     truck1 = truck.Truck(True)
     # initiliaze truck2 with a driver
@@ -72,9 +73,9 @@ class Package_Delivery():
                
                 self.distance_to_next = self.distance_between(truck.current_location[1], package.address)
             # calculate the distance for each package in the truck and save the smallest one in the distance_to_next variable
-            print("current: " + truck.current_location[1] + " package addr: " + package.address)
+            
             package_distance = self.distance_between(truck.current_location[1], package.address)
-            print('distance:' + package_distance)
+            
             if package_distance < self.distance_to_next:
                 self.distance_to_next = package_distance
                 next_package = package
@@ -132,9 +133,10 @@ class Package_Delivery():
 
 
     def deliver_packages(self, truck):
-        next_package = self.min_distance(truck)
-        truck.move_truck(float(self.distance_to_next), next_package.address)
-        truck.deliver_package(next_package)
-        print("Package delivered: " + next_package.id)
-        print(truck.miles_traveled)
+        for i in range(truck.current_packages):
+            next_package = self.min_distance(truck)
+            truck.move_truck(float(self.distance_to_next), next_package.address)
+            truck.deliver_package(next_package)
+            print("Package delivered: " + next_package.id)
+            print('Distance so far for truck: ' + str(truck.miles_traveled))
 

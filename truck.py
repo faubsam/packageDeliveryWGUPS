@@ -45,7 +45,7 @@ class Truck:
         # update the total time elapsed since the truck left the hub
         self.time_elapsed += self.time_to_deliver
         # update the truck's location to the next delivery address
-        self.current_location = dest_addr
+        self.current_location[1] = dest_addr
 
     def deliver_package(self, package):
         count = 0
