@@ -14,11 +14,11 @@ class Package_Delivery():
     total_miles = 0
     distance_to_next = 0
     # initialize truck1 with a driver
-    truck1 = truck.Truck(True)
+    truck1 = truck.Truck('Truck 1',True)
     # initiliaze truck2 with a driver
-    truck2 = truck.Truck(True)
+    truck2 = truck.Truck('Truck 2',True)
     # intialize truck3 without a driver
-    truck3 = truck.Truck(False)
+    truck3 = truck.Truck('Truck 3',False)
     
     
 
@@ -138,22 +138,29 @@ class Package_Delivery():
 
 
     def deliver_packages(self, truck):
+        # check if the truck has a driver assigned
         if truck.has_driver is False:
-            print("Truck has no driver")
+            print(truck.label + ' has no driver')
+        # update all packages on the truck to 'en route' status
         else: 
+            print(truck.label + ' going out for ' + str(truck.current_packages) + ' deliveries')
             for i in range(truck.current_packages):
                 truck.truck_packages[i].delivery_status = 'en route'
             for i in range(truck.current_packages):
+                # determine the next package to deliver using the greedy algorithm
                 next_package = self.min_distance(truck)
+                # move the truck to the next location
                 truck.move_truck(float(self.distance_to_next), next_package.address)
+                # deliver the package
                 truck.deliver_package(next_package)
+                # change the package status to delivered
                 next_package.delivery_status = 'delivered'
-                #print("Package delivered: " + next_package.id)
-                #print('Distance so far for truck: ' + str(truck.miles_traveled))
-        
+                
+        # calculate the distance to the hub and move the truck back to the hub
         if truck.current_packages == 0:
-                        
+                 
             distance_to_hub = float(self.distance_between(truck.current_location, self.addresses_data[0][1]))
             truck.move_truck(distance_to_hub, self.addresses_data[0][1])
+            print(truck.label + ' is now back at the hub')
             
 

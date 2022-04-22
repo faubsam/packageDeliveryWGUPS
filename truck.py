@@ -19,11 +19,13 @@ class Truck:
     time_to_deliver = 0
     # the total time in minutes since the truck has left the hub facility
     time_elapsed = 0
+    label = ""
 
-    def __init__(self, has_driver, max_packages=max_packages, speed=speed):
+    def __init__(self, label, has_driver, max_packages=max_packages, speed=speed):
         self.max_packages = max_packages
         self.speed = speed
         self.has_driver = has_driver
+        self.label = label
         
 
     # load a package onto the truck and update the current packages count
@@ -55,10 +57,12 @@ class Truck:
             print("Truck has no driver")
         else: 
             count = 0
+            # remove the package from the truck's list of packages
             for pack in self.truck_packages:
                 if pack.id == package.id:
                     self.truck_packages.remove(pack)
                 count += 1
+            # update the count of packages currently in the truck
             self.current_packages -= 1
 
     
