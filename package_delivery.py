@@ -1,3 +1,4 @@
+from datetime import datetime
 from struct import pack
 
 import package
@@ -19,6 +20,9 @@ class Package_Delivery():
     truck2 = truck.Truck('Truck 2',True)
     # intialize truck3 without a driver
     truck3 = truck.Truck('Truck 3',False)
+    current_time = datetime.today()
+    day_start_time = current_time.time().replace(hour=8, minute=0,second=0,microsecond=0)
+    day_end_time = current_time.time().replace(hour=16, minute=0,second=0,microsecond=0)
     
     
 
