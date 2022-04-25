@@ -86,7 +86,7 @@ class Package_Delivery():
 
     def min_distance(self, truck):
         next_package = None
-        self.distance_to_next = float(0)
+        self.distance_to_next = float(-1)
 
         # loop through all packages in the truck
         for package in truck.truck_packages:
@@ -94,7 +94,7 @@ class Package_Delivery():
             if next_package is None:
                 next_package = package
             # if the distance is 0, set it to the distance from the current address to the address of the next_package
-            if self.distance_to_next == 0:
+            if self.distance_to_next == -1:
                
                 self.distance_to_next = self.distance_between(truck.current_location, package.address)
             # calculate the distance for each package in the truck and save the smallest one in the distance_to_next variable
@@ -112,70 +112,97 @@ class Package_Delivery():
     def load_truck_packages(self):
         self.truck1.current_location = self.addresses_data[0][1]
         self.truck1.add_package(self.packages_table.table[1][0][1])
+
+        # 4 and 40 share the same address
         self.truck1.add_package(self.packages_table.table[4][0][1])
-            
+        self.truck1.add_package(self.packages_table.table[40][0][1])
+        # 39 and 13 share an address
         self.truck1.add_package(self.packages_table.table[13][0][1])
+        self.truck1.add_package(self.packages_table.table[39][0][1])
         # package 14 must be delivered with 15 and 19
         self.truck1.add_package(self.packages_table.table[14][0][1])
+        # 34, 15, and 16 share an address
         self.truck1.add_package(self.packages_table.table[15][0][1])
         # package 16 must be delivered with 13 and 19
         self.truck1.add_package(self.packages_table.table[16][0][1])
         self.truck1.add_package(self.packages_table.table[34][0][1])
+
         self.truck1.add_package(self.packages_table.table[19][0][1])
         # package 20 must be delivered with 13 and 15
+        # 20 and 21 share the same address
         self.truck1.add_package(self.packages_table.table[20][0][1])
         self.truck1.add_package(self.packages_table.table[21][0][1])
-        self.truck1.add_package(self.packages_table.table[22][0][1])
+        
         self.truck1.add_package(self.packages_table.table[24][0][1])
-        self.truck1.add_package(self.packages_table.table[29][0][1])
-        self.truck1.add_package(self.packages_table.table[26][0][1])
+        
+        self.truck1.add_package(self.packages_table.table[10][0][1])
+
+        # 7 and 29 share the same address
         self.truck1.add_package(self.packages_table.table[7][0][1])
-        self.truck1.add_package(self.packages_table.table[31][0][1])
+        self.truck1.add_package(self.packages_table.table[29][0][1])
+        
                 
 
         
         self.truck2.current_location = self.addresses_data[0][1]
         # package #3 can only be on truck 2
         self.truck2.add_package(self.packages_table.table[3][0][1])
-        self.truck2.add_package(self.packages_table.table[5][0][1])
+        
         # package 6 delayed
         self.truck2.add_package(self.packages_table.table[6][0][1])
-        self.truck2.add_package(self.packages_table.table[8][0][1])
-        self.truck2.add_package(self.packages_table.table[12][0][1])
+        
+        
         # package #18 can only be on truck 2
-        self.truck2.add_package(self.packages_table.table[18][0][1])
+        #self.truck2.add_package(self.packages_table.table[18][0][1])
         # package 25 delayed
+        # 25 and 26 share the same address
         self.truck2.add_package(self.packages_table.table[25][0][1])
-        self.truck2.add_package(self.packages_table.table[30][0][1])
-        self.truck2.add_package(self.packages_table.table[27][0][1])
+        self.truck2.add_package(self.packages_table.table[26][0][1])
+
+        # 8 and 30 share the same address
+        self.truck2.add_package(self.packages_table.table[8][0][1])
+        self.truck2.add_package(self.packages_table.table[30][0][1])   
         
-        
-        
-        self.truck2.add_package(self.packages_table.table[10][0][1])
+        # 31 and 32 share the same address
+        self.truck2.add_package(self.packages_table.table[31][0][1])
+        # package 32 delayed
+        self.truck2.add_package(self.packages_table.table[32][0][1])
+
         # package #36 can only be on truck 2
         self.truck2.add_package(self.packages_table.table[36][0][1])
-        self.truck2.add_package(self.packages_table.table[37][0][1])
+
+        # 5, 37 and 38 share the same address
         # package #38 can only be on truck 2
+        self.truck2.add_package(self.packages_table.table[37][0][1])
         self.truck2.add_package(self.packages_table.table[38][0][1])
-        self.truck2.add_package(self.packages_table.table[40][0][1])
+        self.truck2.add_package(self.packages_table.table[5][0][1])
+        # wrong address listed package 9
+        self.truck2.add_package(self.packages_table.table[9][0][1])
+        self.truck2.add_package(self.packages_table.table[27][0][1])
+        self.truck2.add_package(self.packages_table.table[35][0][1])
 
 
         self.truck3.current_location = self.addresses_data[0][1]
+
+        # 2 and 33 share the same address
         self.truck3.add_package(self.packages_table.table[2][0][1])
+        self.truck3.add_package(self.packages_table.table[33][0][1])
+
         
-        # wrong address listed package 9
-        self.truck3.add_package(self.packages_table.table[9][0][1])
-        self.truck3.add_package(self.packages_table.table[39][0][1])
-        self.truck3.add_package(self.packages_table.table[35][0][1])
+        
+        self.truck3.add_package(self.packages_table.table[22][0][1])
+
+        # 27 and 35 share the same address
+        
         self.truck3.add_package(self.packages_table.table[11][0][1])
+        self.truck3.add_package(self.packages_table.table[12][0][1])
         self.truck3.add_package(self.packages_table.table[17][0][1])
         self.truck3.add_package(self.packages_table.table[23][0][1])
         
         # package 28 delayed
         self.truck3.add_package(self.packages_table.table[28][0][1])
-        # package 32 delayed
-        self.truck3.add_package(self.packages_table.table[32][0][1])
-        self.truck3.add_package(self.packages_table.table[33][0][1])
+        
+        
         
 
 

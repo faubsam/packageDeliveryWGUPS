@@ -31,7 +31,7 @@ if __name__ == "__main__":
     
     package_delivery_day.total_miles = package_delivery_day.truck1.miles_traveled + package_delivery_day.truck2.miles_traveled + package_delivery_day.truck3.miles_traveled
     print(package_delivery_day.display_total_mileage()) 
-    print(package_delivery_day.display_package_info(34))
+   
 
     
     

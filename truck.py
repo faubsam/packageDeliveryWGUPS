@@ -70,7 +70,14 @@ class Truck:
             # update the count of packages currently in the truck
             self.current_packages -= 1
             # update the current_time tracker
+            if (self.current_time >= datetime.now().replace(hour=10,minute=20)):
+                
+                for i in range(len(self.truck_packages)):
+                    if self.truck_packages[i].id == 9:
+                        self.truck_packages[i].address = "410 S State St"
+                        break
             self.current_time += timedelta(minutes=self.time_to_deliver)
+            
             
 
     
