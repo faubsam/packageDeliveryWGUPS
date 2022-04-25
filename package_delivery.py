@@ -176,8 +176,7 @@ class Package_Delivery():
         self.truck2.add_package(self.packages_table.table[37][0][1])
         self.truck2.add_package(self.packages_table.table[38][0][1])
         self.truck2.add_package(self.packages_table.table[5][0][1])
-        # wrong address listed package 9
-        self.truck2.add_package(self.packages_table.table[9][0][1])
+        
         self.truck2.add_package(self.packages_table.table[27][0][1])
         self.truck2.add_package(self.packages_table.table[35][0][1])
 
@@ -198,7 +197,8 @@ class Package_Delivery():
         self.truck3.add_package(self.packages_table.table[12][0][1])
         self.truck3.add_package(self.packages_table.table[17][0][1])
         self.truck3.add_package(self.packages_table.table[23][0][1])
-        
+        # wrong address listed package 9
+        self.truck3.add_package(self.packages_table.table[9][0][1])
         # package 28 delayed
         self.truck3.add_package(self.packages_table.table[28][0][1])
         
