@@ -8,31 +8,28 @@ import package_delivery
 class Truck:
     max_packages = 16
     speed = 18
-    # list of all packages that been loaded onto the truck
-    truck_packages = []
-    # address where the truck is currently located
-    current_location = None
-    # number of package that are currently loaded on the truck
-    current_packages = 0
+    
     # there are more trucks than drivers, so this tells us whether or not the truck currently has a driver assigned
-    has_driver = False
-    # the miles traveled by the truck during the day
-    miles_traveled = 0
-    # the time it takes to deliver the next package on the truck
-    time_to_deliver = 0
-    # the total time in minutes since the truck has left the hub facility
-    time_elapsed = 0
-    label = ""
-    day_start_time = datetime.now().replace(hour=8, minute=0,second=0,microsecond=0)
-    current_time = day_start_time
-    deliveries_complete_time = day_start_time + timedelta(minutes=time_elapsed)
+     
 
-    def __init__(self, label, has_driver, max_packages=max_packages, speed=speed):
-        self.max_packages = max_packages
-        self.speed = speed
+    def __init__(self, label, has_driver, start_hour=8, start_minute=0):
         self.has_driver = has_driver
         self.label = label
-        
+        # list of all packages that been loaded onto the truck
+        self.truck_packages = []
+        # address where the truck is currently located
+        self.current_location = None
+        # number of package that are currently loaded on the truck
+        self.current_packages = 0
+            # the miles traveled by the truck during the day
+        self.miles_traveled = 0
+        # the time it takes to deliver the next package on the truck
+        self.time_to_deliver = 0
+        # the total time in minutes since the truck has left the hub facility
+        self.time_elapsed = 0
+        self.day_start_time = datetime.now().replace(hour=start_hour, minute=start_minute ,second=0,microsecond=0)
+        self.current_time = self.day_start_time
+        self.deliveries_complete_time = self.day_start_time + timedelta(minutes=self.time_elapsed)
 
     # load a package onto the truck and update the current packages count
     def add_package(self, package):

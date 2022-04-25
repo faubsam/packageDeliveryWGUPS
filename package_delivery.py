@@ -13,17 +13,7 @@ class Package_Delivery():
     addresses_data = None
     packages_table = None
     # total miles traveled during the day
-    total_miles = 0
-    distance_to_next = 0
-    # initialize truck1 with a driver
-    truck1 = truck.Truck('Truck 1',True)
-    # initiliaze truck2 with a driver
-    truck2 = truck.Truck('Truck 2',True)
-    # intialize truck3 without a driver
-    truck3 = truck.Truck('Truck 3',False)
-    current_time = datetime.today()
-    day_start_time = current_time.time().replace(hour=8, minute=0,second=0,microsecond=0)
-    day_end_time = current_time.time().replace(hour=16, minute=0,second=0,microsecond=0)
+    
 
     # When a package is delivered, the delivery time will be saved as the key and the package ID as the value
     package_delivery_times = {}
@@ -33,7 +23,7 @@ class Package_Delivery():
     def __init__(self):
         self.csv_reader = csv_helper.CSV_helper()
         self.packages_table = hashTable.HashTable()
-        data_path = pathlib.Path('./DSA2/packageDeliveryWGUPS/data_files')
+        data_path = pathlib.Path('/home/sam/DSA2/packageDeliveryWGUPS/data_files')
         
         # fill out the hash table with the package data
         self.csv_reader.load_package_data(data_path/"WGUPS Package File.csv", self.packages_table)
@@ -41,7 +31,20 @@ class Package_Delivery():
         self.distance_data = self.csv_reader.load_distance_data(data_path/"distances.csv")
         # fill the address list with all addresses as strings
         self.addresses_data = self.csv_reader.load_addresses(data_path/"addresses.csv")
+
+        self.total_miles = 0
+        self.distance_to_next = 0
+        # initialize truck1 with a driver
+        self.truck1 = truck.Truck('Truck 1',True)
+        # initiliaze truck2 with a driver
+        self.truck2 = truck.Truck('Truck 2',True, start_hour=9, start_minute=5)
+        # intialize truck3 without a driver
+        self.truck3 = truck.Truck('Truck 3',False)
+        self.current_time = datetime.today()
+        self.day_start_time = self.current_time.time().replace(hour=8, minute=0,second=0,microsecond=0)
+        self.day_end_time = self.current_time.time().replace(hour=16, minute=0,second=0,microsecond=0)
         
+
     def get_address_index(self, addr):
         for i in range(len(self.addresses_data)):
             if addr == self.addresses_data[i]:
@@ -110,48 +113,70 @@ class Package_Delivery():
         self.truck1.current_location = self.addresses_data[0][1]
         self.truck1.add_package(self.packages_table.table[1][0][1])
         self.truck1.add_package(self.packages_table.table[4][0][1])
-        self.truck1.add_package(self.packages_table.table[7][0][1])    
+            
         self.truck1.add_package(self.packages_table.table[13][0][1])
+        # package 14 must be delivered with 15 and 19
         self.truck1.add_package(self.packages_table.table[14][0][1])
         self.truck1.add_package(self.packages_table.table[15][0][1])
+        # package 16 must be delivered with 13 and 19
         self.truck1.add_package(self.packages_table.table[16][0][1])
+        self.truck1.add_package(self.packages_table.table[34][0][1])
         self.truck1.add_package(self.packages_table.table[19][0][1])
+        # package 20 must be delivered with 13 and 15
         self.truck1.add_package(self.packages_table.table[20][0][1])
         self.truck1.add_package(self.packages_table.table[21][0][1])
         self.truck1.add_package(self.packages_table.table[22][0][1])
         self.truck1.add_package(self.packages_table.table[24][0][1])
         self.truck1.add_package(self.packages_table.table[29][0][1])
-        self.truck1.add_package(self.packages_table.table[34][0][1])
-        self.truck1.add_package(self.packages_table.table[39][0][1])
-        self.truck1.add_package(self.packages_table.table[40][0][1])
+        self.truck1.add_package(self.packages_table.table[26][0][1])
+        self.truck1.add_package(self.packages_table.table[7][0][1])
+        self.truck1.add_package(self.packages_table.table[31][0][1])
+                
 
+        
         self.truck2.current_location = self.addresses_data[0][1]
+        # package #3 can only be on truck 2
         self.truck2.add_package(self.packages_table.table[3][0][1])
         self.truck2.add_package(self.packages_table.table[5][0][1])
+        # package 6 delayed
         self.truck2.add_package(self.packages_table.table[6][0][1])
         self.truck2.add_package(self.packages_table.table[8][0][1])
         self.truck2.add_package(self.packages_table.table[12][0][1])
+        # package #18 can only be on truck 2
         self.truck2.add_package(self.packages_table.table[18][0][1])
+        # package 25 delayed
         self.truck2.add_package(self.packages_table.table[25][0][1])
-        self.truck2.add_package(self.packages_table.table[26][0][1])
+        self.truck2.add_package(self.packages_table.table[30][0][1])
         self.truck2.add_package(self.packages_table.table[27][0][1])
-        self.truck3.add_package(self.packages_table.table[30][0][1])
-        self.truck2.add_package(self.packages_table.table[31][0][1])
-        self.truck2.add_package(self.packages_table.table[32][0][1])
-        self.truck2.add_package(self.packages_table.table[35][0][1])
+        
+        
+        
+        self.truck2.add_package(self.packages_table.table[10][0][1])
+        # package #36 can only be on truck 2
         self.truck2.add_package(self.packages_table.table[36][0][1])
         self.truck2.add_package(self.packages_table.table[37][0][1])
+        # package #38 can only be on truck 2
         self.truck2.add_package(self.packages_table.table[38][0][1])
+        self.truck2.add_package(self.packages_table.table[40][0][1])
+
 
         self.truck3.current_location = self.addresses_data[0][1]
         self.truck3.add_package(self.packages_table.table[2][0][1])
+        
+        # wrong address listed package 9
         self.truck3.add_package(self.packages_table.table[9][0][1])
-        self.truck3.add_package(self.packages_table.table[10][0][1])
+        self.truck3.add_package(self.packages_table.table[39][0][1])
+        self.truck3.add_package(self.packages_table.table[35][0][1])
         self.truck3.add_package(self.packages_table.table[11][0][1])
         self.truck3.add_package(self.packages_table.table[17][0][1])
         self.truck3.add_package(self.packages_table.table[23][0][1])
+        
+        # package 28 delayed
         self.truck3.add_package(self.packages_table.table[28][0][1])
+        # package 32 delayed
+        self.truck3.add_package(self.packages_table.table[32][0][1])
         self.truck3.add_package(self.packages_table.table[33][0][1])
+        
 
 
     def deliver_packages(self, truck):
