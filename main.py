@@ -8,7 +8,16 @@ import csv_helper
 import hashTable
 import package_delivery
 
- 
+def print_menu():
+    for i in range(3):
+        print(" ")
+    print('Please select one of 3 options')
+    print('-----------------------------------')
+    print('1 - Display total truck mileage')
+    print('2 - Display current status of all packages')
+    print('3 - Display current status for a select package')
+    print('4 - Exit the application (all data will be lost)')
+     
 
 if __name__ == "__main__":
     package_delivery_day = package_delivery.Package_Delivery()
@@ -29,8 +38,23 @@ if __name__ == "__main__":
     print("Truck 3 leaving at: " + str(package_delivery_day.truck3.current_time))
     package_delivery_day.deliver_packages(package_delivery_day.truck3)
     
-    package_delivery_day.total_miles = package_delivery_day.truck1.miles_traveled + package_delivery_day.truck2.miles_traveled + package_delivery_day.truck3.miles_traveled
-    print(package_delivery_day.display_total_mileage()) 
+    
+    print_menu()
+    user_choice = input('Enter your choice: ')
+    
+    while(user_choice is not '4'):
+        if user_choice == '1':
+            print('****************************************')
+            package_delivery_day.display_total_mileage()
+            print('****************************************')
+        if user_choice == '2':
+            print('****************************************')
+            package_delivery_day.display_all_packages()
+            print('****************************************')
+        print_menu()    
+        user_choice = input('Enter your choice: ') 
+        if(user_choice == '4'):
+            quit()
    
 
     

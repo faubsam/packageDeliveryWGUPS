@@ -21,7 +21,7 @@ class Truck:
         self.current_location = None
         # number of package that are currently loaded on the truck
         self.current_packages = 0
-            # the miles traveled by the truck during the day
+        # the miles traveled by the truck during the day
         self.miles_traveled = 0
         # the time it takes to deliver the next package on the truck
         self.time_to_deliver = 0

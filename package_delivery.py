@@ -52,12 +52,17 @@ class Package_Delivery():
         return 0
 
     def display_total_mileage(self):
-        miles = round(self.total_miles, 2)
+        miles = round(self.truck1.miles_traveled + self.truck2.miles_traveled + self.truck3.miles_traveled, 2)
         print(f'Total distance traveled by all trucks: {miles} miles')
 
     def display_package_info(self, id):
         self.packages_table.lookup(id)
-          
+
+    def display_all_packages(self):
+        size = (len(self.packages_table.table) - 1)
+        for i in range(1, size):
+            print(self.packages_table.table[i][0][1])
+
     # return the distance between 2 address
     def distance_between(self, addr1, addr2):
         addr1_index = None
@@ -126,15 +131,12 @@ class Package_Delivery():
         # package 16 must be delivered with 13 and 19
         self.truck1.add_package(self.packages_table.table[16][0][1])
         self.truck1.add_package(self.packages_table.table[34][0][1])
-
         self.truck1.add_package(self.packages_table.table[19][0][1])
         # package 20 must be delivered with 13 and 15
         # 20 and 21 share the same address
         self.truck1.add_package(self.packages_table.table[20][0][1])
         self.truck1.add_package(self.packages_table.table[21][0][1])
-        
         self.truck1.add_package(self.packages_table.table[24][0][1])
-        
         self.truck1.add_package(self.packages_table.table[10][0][1])
 
         # 7 and 29 share the same address
@@ -147,13 +149,11 @@ class Package_Delivery():
         self.truck2.current_location = self.addresses_data[0][1]
         # package #3 can only be on truck 2
         self.truck2.add_package(self.packages_table.table[3][0][1])
-        
         # package 6 delayed
         self.truck2.add_package(self.packages_table.table[6][0][1])
         
-        
         # package #18 can only be on truck 2
-        #self.truck2.add_package(self.packages_table.table[18][0][1])
+        self.truck2.add_package(self.packages_table.table[18][0][1])
         # package 25 delayed
         # 25 and 26 share the same address
         self.truck2.add_package(self.packages_table.table[25][0][1])

@@ -5,11 +5,13 @@ class HashTable:
     # Constructor for the hash table class which creates a new, blank hash table
     # Default capacity is 50
     # This is a chaining hash table, each bucket is initialized with an empty list
-    def __init__(self, initial_capacity=50):
+    def __init__(self, initial_capacity=41):
         self.table = []
         for i in range(initial_capacity):
             self.table.append([])
 
+    def __len__(self):
+        return len(self.table)
     # Insert function takes a node as the value to add to the hash table
     # The bucket to insert is retrieved from the modulo of the size of the hash table
     # The node gets added to the list in the selected bucket
