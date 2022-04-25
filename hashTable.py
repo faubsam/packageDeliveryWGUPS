@@ -29,11 +29,11 @@ class HashTable:
             return True
 
     # Lookup parameter returns the value in the bucket list for the given key parameter
-    def lookup(self, package):
-        bucket = int(package.id) % len(self.table)
+    def lookup(self, id):
+        bucket = int(id) % len(self.table)
         bucket_list = self.table[bucket]
         for package_list in bucket_list:
-            if package_list[0] == package.id:
+            if package_list[0] == id:
                 return package_list
         else:
             return None

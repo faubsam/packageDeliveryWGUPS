@@ -1,4 +1,7 @@
+from datetime import datetime, timedelta
+
 import package_delivery
+
 
 
 
@@ -20,6 +23,9 @@ class Truck:
     # the total time in minutes since the truck has left the hub facility
     time_elapsed = 0
     label = ""
+    day_start_time = datetime.now().replace(hour=8, minute=0,second=0,microsecond=0)
+    current_time = day_start_time
+    deliveries_complete_time = day_start_time + timedelta(minutes=time_elapsed)
 
     def __init__(self, label, has_driver, max_packages=max_packages, speed=speed):
         self.max_packages = max_packages
@@ -62,7 +68,12 @@ class Truck:
                 if pack.id == package.id:
                     self.truck_packages.remove(pack)
                 count += 1
+                # timestamp the package delivery
+                pack.delivery_time = self.current_time + timedelta(minutes=self.time_to_deliver)
             # update the count of packages currently in the truck
             self.current_packages -= 1
+            # update the current_time tracker
+            self.current_time += timedelta(minutes=self.time_to_deliver)
+            
 
     

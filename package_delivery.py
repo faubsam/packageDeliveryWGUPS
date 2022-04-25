@@ -1,10 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from struct import pack
 
 import package
 import truck
 import hashTable
 import csv_helper
+import pathlib
 
 class Package_Delivery():
     csv_reader = None
@@ -23,24 +24,36 @@ class Package_Delivery():
     current_time = datetime.today()
     day_start_time = current_time.time().replace(hour=8, minute=0,second=0,microsecond=0)
     day_end_time = current_time.time().replace(hour=16, minute=0,second=0,microsecond=0)
+
+    # When a package is delivered, the delivery time will be saved as the key and the package ID as the value
+    package_delivery_times = {}
     
     
 
     def __init__(self):
         self.csv_reader = csv_helper.CSV_helper()
         self.packages_table = hashTable.HashTable()
+        data_path = pathlib.Path('./DSA2/packageDeliveryWGUPS/data_files')
+        
         # fill out the hash table with the package data
-        self.csv_reader.load_package_data("/home/sam/DSA2/packageDeliveryWGUPS/data_files/WGUPS Package File.csv", self.packages_table)
+        self.csv_reader.load_package_data(data_path/"WGUPS Package File.csv", self.packages_table)
         # fill the distances list with all distances
-        self.distance_data = self.csv_reader.load_distance_data("/home/sam/DSA2/packageDeliveryWGUPS/data_files/distances.csv")
+        self.distance_data = self.csv_reader.load_distance_data(data_path/"distances.csv")
         # fill the address list with all addresses as strings
-        self.addresses_data = self.csv_reader.load_addresses("/home/sam/DSA2/packageDeliveryWGUPS/data_files/addresses.csv")
+        self.addresses_data = self.csv_reader.load_addresses(data_path/"addresses.csv")
         
     def get_address_index(self, addr):
         for i in range(len(self.addresses_data)):
             if addr == self.addresses_data[i]:
                 return i
         return 0
+
+    def display_total_mileage(self):
+        miles = round(self.total_miles, 2)
+        print(f'Total distance traveled by all trucks: {miles} miles')
+
+    def display_package_info(self, id):
+        self.packages_table.lookup(id)
           
     # return the distance between 2 address
     def distance_between(self, addr1, addr2):
@@ -159,12 +172,15 @@ class Package_Delivery():
                 truck.deliver_package(next_package)
                 # change the package status to delivered
                 next_package.delivery_status = 'delivered'
+                print(next_package)
+                
                 
         # calculate the distance to the hub and move the truck back to the hub
         if truck.current_packages == 0:
                  
             distance_to_hub = float(self.distance_between(truck.current_location, self.addresses_data[0][1]))
             truck.move_truck(distance_to_hub, self.addresses_data[0][1])
-            print(truck.label + ' is now back at the hub')
+            truck.deliveries_complete_time = truck.day_start_time + timedelta(minutes=truck.time_elapsed)
+            print(truck.label + ' is now back at the hub. The time is now: ' + str(truck.deliveries_complete_time))
             
 

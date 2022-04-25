@@ -25,11 +25,14 @@ if __name__ == "__main__":
         print('Driver for truck 2 can now switch to a new truck')
     print('Driver assigned to truck 3')
     package_delivery_day.truck3.has_driver = True
+    package_delivery_day.truck3.current_time = package_delivery_day.truck1.deliveries_complete_time
+    package_delivery_day.truck3.day_start_time = package_delivery_day.truck1.deliveries_complete_time
+    print("Truck 3 leaving at: " + str(package_delivery_day.truck3.current_time))
     package_delivery_day.deliver_packages(package_delivery_day.truck3)
     
     package_delivery_day.total_miles = package_delivery_day.truck1.miles_traveled + package_delivery_day.truck2.miles_traveled + package_delivery_day.truck3.miles_traveled
-    print('total miles: ' + str(int(package_delivery_day.total_miles))) 
-    print(package_delivery_day.day_end_time)
+    print(package_delivery_day.display_total_mileage()) 
+    print(package_delivery_day.display_package_info(34))
 
     
     
