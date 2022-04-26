@@ -58,19 +58,68 @@ class Package_Delivery():
         miles = round(self.truck1.miles_traveled + self.truck2.miles_traveled + self.truck3.miles_traveled, 2)
         print(f'Total distance traveled by all trucks: {miles} miles')
 
-    def display_package_info(self, id):
-        print(self.packages_table.lookup(id))
-
-    def display_all_packages(self, time=datetime.today().time().replace(second=0, microsecond=0)):
+    def display_package_info(self, id, time=datetime.today().time().replace(hour=8,minute=0,second=0, microsecond=0)):
         size = (len(self.packages_table.table) - 1)
-        input_time = datetime.strptime('8:00','%H:%M').time()
-        print(input_time)
-        if input_time in self.package_delivery_times.keys():
-            packages_at_time = pickle.loads(self.package_delivery_times[input_time])
-            for i in range(1, size):
-                print(packages_at_time[i][0][1])
-        else: 
-            print("Time not found")
+        try:
+            input_time = datetime.strptime(time,'%H:%M').time()
+            if input_time < self.day_start_time:
+                input_time = self.day_start_time.replace(hour=7,minute=59)
+            if input_time in self.package_delivery_times.keys():
+                packages_at_time = pickle.loads(self.package_delivery_times[input_time])
+                print(packages_at_time[int(id)][0][1])
+            
+            else: 
+                while input_time:
+                    time_minute = input_time.minute
+                    time_hour = input_time.hour
+                    if time_minute == 0:
+                        time_hour = input_time.hour - 1
+                    if time_minute != 0:
+                        time_minute = input_time.minute - 1
+                    else:
+                        time_minute = 59
+                    input_time = datetime.today().time().replace(hour=time_hour,minute=time_minute,second=0, microsecond=0)
+                    if input_time in self.package_delivery_times.keys():
+                        
+                        packages_at_time = pickle.loads(self.package_delivery_times[input_time])
+                        print(packages_at_time[int(id)][0][1])
+                        break
+        except(ValueError, TypeError):
+            print('Invalid time entry')
+            print('Time format is: HH:MM')
+        
+
+    def display_all_packages(self, time=datetime.today().time().replace(hour=8,minute=0,second=0, microsecond=0)):
+        size = (len(self.packages_table.table) - 1)
+        try:
+            input_time = datetime.strptime(time,'%H:%M').time()
+                   
+            if input_time in self.package_delivery_times.keys():
+                packages_at_time = pickle.loads(self.package_delivery_times[input_time])
+                for i in range(1, size):
+                    print(packages_at_time[i][0][1])
+            elif input_time < self.day_start_time:
+                input_time = self.day_start_time.replace(hour=7,minute=59)
+            else: 
+                while input_time:
+                    time_minute = input_time.minute
+                    time_hour = input_time.hour
+                    if time_minute == 0:
+                        time_hour = input_time.hour - 1
+                    if time_minute != 0:
+                        time_minute = input_time.minute - 1
+                    else:
+                        time_minute = 59
+                    input_time = datetime.today().time().replace(hour=time_hour,minute=time_minute,second=0, microsecond=0)
+                    if input_time in self.package_delivery_times.keys():
+                        
+                        packages_at_time = pickle.loads(self.package_delivery_times[input_time])
+                        for i in range(1, size):
+                            print(packages_at_time[i][0][1])
+                        break
+        except (ValueError, TypeError):
+            print('Invalid time entry')
+            print('Time format is: HH:MM')
         
 
     # return the distance between 2 address

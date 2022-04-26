@@ -76,7 +76,7 @@ class Truck:
                 for i in range(len(self.truck_packages)):
                     if self.truck_packages[i].id == '9':
                         self.truck_packages[i].address = "410 S State St"
-                        print(self.truck_packages[i].address)
+                        
                         break
             self.current_time += timedelta(minutes=self.time_to_deliver)
             

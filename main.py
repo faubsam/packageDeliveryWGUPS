@@ -55,9 +55,16 @@ if __name__ == "__main__":
         elif user_choice == '3':
             print('****************************************')
             package_number = input(f'Enter the package ID to search for (ID cannot be greater than {len(package_delivery_day.packages_table.table) -1}): ')
-            print('-----------------------------------------')
-            package_delivery_day.display_package_info(package_number)
-            print('****************************************')
+            if int(package_number) > len(package_delivery_day.packages_table.table) -1 or int(package_number) < 1:
+                print('The package ID you have entered does not exist')
+                print_menu()
+            else:
+                search_time = input('Input a time (format HH:MM): ')
+                print('-----------------------------------------')
+                package_delivery_day.display_package_info(package_number, search_time)
+                print('****************************************')
+        else:
+            print('Invalid entry, please try again')
         print_menu()    
         user_choice = input('Enter your choice: ') 
         if(user_choice == '4'):
