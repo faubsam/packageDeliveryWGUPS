@@ -8,7 +8,10 @@ import csv_helper
 import hashTable
 import package_delivery
 
+# prints the menu with available options for the user to choose
 def print_menu():
+    """Prints the menu for the user with the available options
+    """
     for i in range(3):
         print(" ")
     print('Please select one of 3 options')
@@ -20,11 +23,15 @@ def print_menu():
      
 
 if __name__ == "__main__":
+    """Main menu runs the package delivery operation for the day and presents the user with a menu to query details about the packages and the trucks
+    """
+    # initialize a new package delivery day
     package_delivery_day = package_delivery.Package_Delivery()
     print("Starting deliveries for the day...........")
+    # load packages onto the trucks
     package_delivery_day.load_truck_packages()
     
-    
+    # deliver packages and return trucks to the hub
     package_delivery_day.deliver_packages(package_delivery_day.truck1)
     package_delivery_day.deliver_packages(package_delivery_day.truck2)
     if package_delivery_day.truck1.current_packages == 0 and package_delivery_day.truck1.current_location == package_delivery_day.addresses_data[0][1]:
@@ -38,7 +45,7 @@ if __name__ == "__main__":
     print("Truck 3 leaving at: " + str(package_delivery_day.truck3.current_time))
     package_delivery_day.deliver_packages(package_delivery_day.truck3)
     
-    
+    # allow user to view the menu and query data about the trucks and packages
     print_menu()
     user_choice = input('Enter your choice: ')
     

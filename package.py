@@ -4,6 +4,7 @@
 import csv
 from dataclasses import replace
 from datetime import datetime
+from tokenize import String
 
 
 class Package:
@@ -27,14 +28,26 @@ class Package:
         self.delivery_status = delivery_status
         self.delivery_time = None
 
-    def __str__(self):
+    # string method to print the packages in a readable format with relevant information
+    def __str__(self) -> String:
+        """str method to display package object in a readable format with relevant information
+
+        Returns:
+            String: returns the string to print
+        """
         if self.delivery_status != 'delivered':
             return f'Package ID: {self.id}      deadline: {self.deadline}           status: {self.delivery_status}                                              delivery address: {self.address}'
         else:
             return f'Package ID: {self.id}      deadline: {self.deadline}           status: {self.delivery_status} at {self.delivery_time.time()}               delivery address: {self.address}'
 
-    # add all packages in the file to the hash table
+    # add all packages in the file to the hash table - O(n)
     def loadPackageData(file, hashTable):
+        """loads data from the packages file into the hash table
+
+        Args:
+            file (CSV file): csv file containing the package data
+            hashTable (bool): the hash table to hold the package data
+        """
         with open(file) as package_file:
             packageData = csv.reader(package_file)
             next(packageData)
