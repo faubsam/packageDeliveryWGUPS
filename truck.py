@@ -38,6 +38,7 @@ class Truck:
         else:
             self.truck_packages.append(package)
             self.current_packages += 1
+            
 
     # move to the truck to a new address and update the truck's location
     def move_truck(self, distance, dest_addr):

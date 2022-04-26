@@ -47,17 +47,17 @@ if __name__ == "__main__":
             print('****************************************')
             package_delivery_day.display_total_mileage()
             print('****************************************')
-        if user_choice == '2':
+        elif user_choice == '2':
             print('****************************************')
             package_delivery_day.display_all_packages()
+            print('****************************************')
+        elif user_choice == '3':
+            print('****************************************')
+            package_number = input(f'Enter the package ID to search for (ID cannot be greater than {len(package_delivery_day.packages_table.table) -1}): ')
+            print('-----------------------------------------')
+            package_delivery_day.display_package_info(package_number)
             print('****************************************')
         print_menu()    
         user_choice = input('Enter your choice: ') 
         if(user_choice == '4'):
             quit()
-   
-
-    
-    
-    
-    

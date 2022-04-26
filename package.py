@@ -25,10 +25,13 @@ class Package:
         self.zip_code = zip_code
         self.weight = weight
         self.delivery_status = delivery_status
-        self.delivery_time = datetime.today().replace(hour=8, minute=0,second=0,microsecond=0)
+        self.delivery_time = None
 
     def __str__(self):
-        return f'Package ID: {self.id}   deadline: {self.deadline}   status: {self.delivery_status}   delivered at: {self.address}, {self.delivery_time}'
+        if self.delivery_status != 'delivered':
+            return f'Package ID: {self.id}      deadline: {self.deadline}           status: {self.delivery_status}                                              delivery address: {self.address}'
+        else:
+            return f'Package ID: {self.id}      deadline: {self.deadline}           status: {self.delivery_status} at {self.delivery_time.time()}               delivery address: {self.address}'
 
     # add all packages in the file to the hash table
     def loadPackageData(file, hashTable):

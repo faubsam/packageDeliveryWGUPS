@@ -6,6 +6,7 @@ import truck
 import hashTable
 import csv_helper
 import pathlib
+import pickle
 
 class Package_Delivery():
     csv_reader = None
@@ -43,6 +44,8 @@ class Package_Delivery():
         self.current_time = datetime.today()
         self.day_start_time = self.current_time.time().replace(hour=8, minute=0,second=0,microsecond=0)
         self.day_end_time = self.current_time.time().replace(hour=16, minute=0,second=0,microsecond=0)
+        self.package_delivery_times[self.day_start_time.replace(hour=7,minute=59)] = pickle.dumps(self.packages_table.table)
+
         
 
     def get_address_index(self, addr):
@@ -56,12 +59,19 @@ class Package_Delivery():
         print(f'Total distance traveled by all trucks: {miles} miles')
 
     def display_package_info(self, id):
-        self.packages_table.lookup(id)
+        print(self.packages_table.lookup(id))
 
-    def display_all_packages(self):
+    def display_all_packages(self, time=datetime.today().time().replace(second=0, microsecond=0)):
         size = (len(self.packages_table.table) - 1)
-        for i in range(1, size):
-            print(self.packages_table.table[i][0][1])
+        input_time = datetime.strptime('8:00','%H:%M').time()
+        print(input_time)
+        if input_time in self.package_delivery_times.keys():
+            packages_at_time = pickle.loads(self.package_delivery_times[input_time])
+            for i in range(1, size):
+                print(packages_at_time[i][0][1])
+        else: 
+            print("Time not found")
+        
 
     # return the distance between 2 address
     def distance_between(self, addr1, addr2):
@@ -115,6 +125,7 @@ class Package_Delivery():
     
     # load all packages from the hash table into one of the 3 trucks
     def load_truck_packages(self):
+        
         self.truck1.current_location = self.addresses_data[0][1]
         self.truck1.add_package(self.packages_table.table[1][0][1])
 
@@ -215,6 +226,8 @@ class Package_Delivery():
             print(truck.label + ' going out for ' + str(truck.current_packages) + ' deliveries')
             for i in range(truck.current_packages):
                 truck.truck_packages[i].delivery_status = 'en route'
+            if truck.label == 'Truck 1':
+                self.package_delivery_times[self.day_start_time] = pickle.dumps(self.packages_table.table)
             for i in range(truck.current_packages):
                 # determine the next package to deliver using the greedy algorithm
                 next_package = self.min_distance(truck)
@@ -222,9 +235,14 @@ class Package_Delivery():
                 truck.move_truck(float(self.distance_to_next), next_package.address)
                 # deliver the package
                 truck.deliver_package(next_package)
+                key = (truck.day_start_time + timedelta(minutes=truck.time_elapsed)).time().replace(second=0, microsecond=0)
+                                
                 # change the package status to delivered
                 next_package.delivery_status = 'delivered'
-                print(next_package)
+                self.current_table_state = pickle.dumps(self.packages_table.table)
+                if key not in self.package_delivery_times.keys(): 
+                    self.package_delivery_times[key] = self.current_table_state
+                
                 
                 
         # calculate the distance to the hub and move the truck back to the hub

@@ -36,7 +36,7 @@ class HashTable:
         bucket_list = self.table[bucket]
         for package_list in bucket_list:
             if package_list[0] == id:
-                return package_list
+                return package_list[1]
         else:
             return None
 
