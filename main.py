@@ -56,7 +56,7 @@ if __name__ == "__main__":
             print('****************************************')
         elif user_choice == '2':
             print('****************************************')
-            search_time = input('Input a time (format HH:MM): ')
+            search_time = input('Input a time (format HH:MM, 24-hour clock): ')
             package_delivery_day.display_all_packages(search_time)
             print('****************************************')
         elif user_choice == '3':
@@ -66,7 +66,7 @@ if __name__ == "__main__":
                 print('The package ID you have entered does not exist')
                 print_menu()
             else:
-                search_time = input('Input a time (format HH:MM): ')
+                search_time = input('Input a time (format HH:MM, 24-hour clock): ')
                 print('-----------------------------------------')
                 package_delivery_day.display_package_info(package_number, search_time)
                 print('****************************************')
