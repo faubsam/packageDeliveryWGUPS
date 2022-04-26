@@ -42,7 +42,7 @@ if __name__ == "__main__":
     print_menu()
     user_choice = input('Enter your choice: ')
     
-    while(user_choice is not '4'):
+    while(user_choice != '4'):
         if user_choice == '1':
             print('****************************************')
             package_delivery_day.display_total_mileage()

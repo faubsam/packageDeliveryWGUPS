@@ -291,7 +291,7 @@ class Package_Delivery():
                 self.current_table_state = pickle.dumps(self.packages_table.table)
                 if key not in self.package_delivery_times.keys(): 
                     self.package_delivery_times[key] = self.current_table_state
-                
+                print(next_package)
                 
                 
         # calculate the distance to the hub and move the truck back to the hub
