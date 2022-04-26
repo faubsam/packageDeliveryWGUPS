@@ -49,7 +49,8 @@ if __name__ == "__main__":
             print('****************************************')
         elif user_choice == '2':
             print('****************************************')
-            package_delivery_day.display_all_packages()
+            search_time = input('Input a time (format HH:MM): ')
+            package_delivery_day.display_all_packages(search_time)
             print('****************************************')
         elif user_choice == '3':
             print('****************************************')
