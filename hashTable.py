@@ -20,6 +20,7 @@ class HashTable:
             int: the size of the table
         """
         return len(self.table)
+    
     # Insert function takes a node as the value to add to the hash table
     # The bucket to insert is retrieved from the modulo of the size of the hash table - O(n)
     # The node gets added to the list in the selected bucket - space O(n^2) the worst case scenario is that the hashing function puts all packages in the same bucket

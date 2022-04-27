@@ -83,7 +83,7 @@ class Truck:
             print("Truck has no driver")
         else: 
             count = 0
-            # remove the package from the truck's list of packages
+            # remove the package from the truck's list of packages O(n)
             for pack in self.truck_packages:
                 if pack.id == package.id:
                     self.truck_packages.remove(pack)
