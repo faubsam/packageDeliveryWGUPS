@@ -329,7 +329,7 @@ class Package_Delivery():
                 truck.truck_packages[i].delivery_status = 'en route'
             if truck.label == 'Truck 1':
                 self.package_delivery_times[self.day_start_time] = pickle.dumps(self.packages_table.table)
-            # get the mind distance for all packages to figure out which package to deliver next - O(n)
+            # get the min distance for all packages to figure out which package to deliver next - O(n)
             for i in range(truck.current_packages):
                 # determine the next package to deliver using the greedy algorithm
                 next_package = self.min_distance(truck)
